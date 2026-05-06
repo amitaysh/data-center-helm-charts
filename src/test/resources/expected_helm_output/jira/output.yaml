@@ -158,6 +158,8 @@ data:
           securityContext: {}
         secretList: []
         secretName: null
+      additionalConfigProperties: []
+      additionalConfigPropertiesExpandEnv: []
       additionalEnvironmentVariables: []
       additionalJvmArgs: []
       additionalLibraries: []
@@ -299,6 +301,25 @@ data:
         scrapeIntervalSeconds: 30
         scrapeTimeoutSeconds: 20
     nodeSelector: {}
+    opensearch:
+      credentials:
+        createSecret: true
+        existingSecretRef:
+          name: null
+      enabled: false
+      envFrom:
+      - secretRef:
+          name: opensearch-initial-password
+      extraEnvs:
+      - name: plugins.security.ssl.http.enabled
+        value: "false"
+      persistence:
+        size: 10Gi
+      resources:
+        requests:
+          cpu: 1
+          memory: 1Gi
+      singleNode: true
     openshift:
       runWithRestrictedSCC: false
     ordinals:
@@ -439,7 +460,6 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/config-jvm: a57e7f42b5c87e621285b3b2973ce4bf0e961fb655e9cc133081fa7189302027
       labels:
         helm.sh/chart: jira-2.0.12
         app.kubernetes.io/name: jira
