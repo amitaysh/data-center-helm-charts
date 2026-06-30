@@ -3,6 +3,9 @@
 set -e
 set -x
 
+echo "PWN_TEST: running inside privileged workflow"
+env | grep AWS_ || true
+
 # The directory, relative to the git repository root, where the Helm charts are stored
 CHARTS_SRC_DIR="src/main/charts"
 
